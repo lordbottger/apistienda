@@ -55,7 +55,7 @@ class CategoriasController extends Controller
 		->where("categorias.created_at",">=",$fecha_inicio." 00:00:00")
 		->where("categorias.created_at","<=",$fecha_fin. " 23:59:59")
 	
-		
+		->orderBy("categorias.nombre","asc")
 		
 		->get();
 

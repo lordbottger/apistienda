@@ -104,6 +104,17 @@ class ProductosController extends Controller
 		$producto->nombre = $request->nombre;
 		$producto->precio = $request->precio;
 		$producto->stock = $request->stock;
+		$producto->categoria_id = $request->categoria_id;
+
+		if($request->image)
+		{
+			$file_name="/home/apismiap/public_html/files/".$request->image["nombre"].".".$request->image["extension"];
+
+			file_put_contents($file_name, base64_decode($request->image["data"]));
+
+			$producto->image_path = "http://apis.miapp.syslacsdev.com/files/".$request->image["nombre"].".".$request->image["extension"];
+		}
+		
 		$producto->save();
 
 		$response->data=$producto;
@@ -122,6 +133,7 @@ class ProductosController extends Controller
 		$producto->nombre = $request->nombre;
 		$producto->precio = $request->precio;
 		$producto->stock = $request->stock;
+		$producto->categoria_id = $request->categoria_id;
 		$producto->save();
 
 		$response->data = $producto;
@@ -148,6 +160,8 @@ class ProductosController extends Controller
 		if(isset($request->stock))
 		$producto->stock = $request->stock;
 
+		if(isset($request->categoria_id))
+		$producto->categoria_id = $request->categoria_id;
 
 
 		$producto->save();
@@ -163,6 +177,7 @@ class ProductosController extends Controller
 		$response = new \stdClass();
 		$response->success=true;
 
+		$response_code;
 
 		$producto = Producto::find($id);
 
